@@ -14,9 +14,10 @@ axios(url)
         const $ = cheerio.load(html) 
         $('.fc-item__title', html).each( function(){
              const title = $(this).text()
-             articles.push(title)
+             const url = $(this).find('a').attr('href')
+             articles.push({title, url })
         })  
         console.log(articles)
-    })
+    }).catch( err => console.log(err))
 
 app.listen(PORT , () => console.log(`Server running on PORT ${PORT}`))
