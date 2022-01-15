@@ -7,11 +7,16 @@ const express = require('express');
 const app = express()
 
 const url = 'https://www.theguardian.com/international'
-
+const articles = []
 axios(url)
-    .then(response =>{
+    .then(response => {
         const html = response.data 
-        console.log(html);
+        const $ = cheerio.load(html) 
+        $('.fc-item__title', html).each( function(){
+             const title = $(this).text()
+             articles.push(title)
+        })  
+        console.log(articles)
     })
 
 app.listen(PORT , () => console.log(`Server running on PORT ${PORT}`))
